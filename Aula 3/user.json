@@ -1,0 +1,21 @@
+[
+    {
+        "id": 1,
+        "nome": "Jamal Phillips",
+        "email": "jamalballs@gmail.com"
+    },
+    {
+        "id": 2,
+        "nome": "Pardal Careca",
+        "email": "Pardalzin.trambaiolli@gmail.com"
+    },
+    {
+        "id": 3,
+        "nome": "Pardal Careca",
+        "email": "Pardalzin.trambaiolli@gmail.com",
+        "senha": "12345",
+        "endereco": "rua dos baitolas",
+        "telefone": "1324567598-5569",
+        "cpf": "166-252-138-09"
+    }
+]
