@@ -54,11 +54,21 @@ class userService {
             console.log("Erro ao carregar arquivo", erro)
         }
     }
-
+    
     getUser() {
         try {
             return this.users
         } catch (erro) {
+            console.log("Erro ao carregar arquivo", erro)
+        }
+    }
+    
+    deleteUser(id){
+        try{
+            this.users = this.users.filter(user => user.id !== id); //cria um novo aray, não colocando o id selecionado 
+            this.saveUsers();
+        }
+        catch{
             console.log("Erro ao carregar arquivo", erro)
         }
     }
