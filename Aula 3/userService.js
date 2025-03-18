@@ -1,6 +1,7 @@
 const User = require("./user");
 const path = require('path'); //modulo para maniplular caminhos
 const fs = require('fs'); //módulo para manipular arquivos fille sytem 
+const { get } = require("http");
 
 
 // toda vez que a lista começar com o valor fixo, não precisa colocar aqui
@@ -69,6 +70,14 @@ class userService {
             this.saveUsers();
         }
         catch{
+            console.log("Erro ao carregar arquivo", erro)
+        }
+    }
+    updateUser(id){
+        try{
+        this.users = this.users.updateUser(user => user.id !== id)
+        this.saveUsers();
+        } catch{
             console.log("Erro ao carregar arquivo", erro)
         }
     }

@@ -33,6 +33,16 @@ app.delete("/users/:id", (req,res) =>{
     }
 })
 
+app.update("/users/:id", (req,res) =>{
+    const id = parseInt(req.params.id);
+    try{
+        const resultado = userService.updateUser(id);
+        res.status(200).json(resultado);
+    } catch (erro){
+        res.status(404).json({error:erro.menssage})
+    }
+}) 
+
 
 const port = 3000;
 app.listen(port,() =>{
