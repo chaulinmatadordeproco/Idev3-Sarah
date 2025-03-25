@@ -6,10 +6,28 @@
     },
     {
         "id": 3,
-        "nome": "Pardal Careca",
+        "nome": "Jamal Balss",
+        "email": "JamalBalss@gmail.com",
+        "senha": "12345678910",
+        "endereco": "rua dos jamals",
+        "telefone": "1324567598-5569",
+        "cpf": "166-252-138-09"
+    },
+    {
+        "id": 4,
+        "nome": "Pardal Carequinha",
         "email": "Pardalzin.trambaiolli@gmail.com",
-        "senha": "12345",
+        "senha": "$2b$10$tg3fh9grTH/XLAkkLVIKo.22seCxNNEElCA.pNK3diwQtFSOajD0m",
         "endereco": "rua dos baitolas",
+        "telefone": "1324567598-5569",
+        "cpf": "166-252-138-09"
+    },
+    {
+        "id": 5,
+        "nome": "Jamal Bolitas",
+        "email": "JamalBalss@gmail.com",
+        "senha": "$2b$10$crc/5Xbtspv.zvAJkTh20OSfjoyW1FxzDmI24f/S3lE66LW3EU6x6",
+        "endereco": "rua dos jamals",
         "telefone": "1324567598-5569",
         "cpf": "166-252-138-09"
     }

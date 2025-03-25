@@ -1,6 +1,7 @@
 const User = require("./user");
 const path = require('path'); //modulo para maniplular caminhos
-const fs = require('fs'); //módulo para manipular arquivos fille sytem 
+const fs = require('fs'); //módulo para manipular arquivos fille sytem ,
+const bcrypt = require('bcryptjs')
 const { get } = require("http");
 
 
@@ -45,9 +46,10 @@ class userService {
     }
     }
 
-    addUser(nome, email, senha, endereco, telefone, cpf) {
+    async addUser(nome, email, senha, endereco, telefone, cpf) { // função assincrona ela espera algo acontecer dentro para funcionar. Precisa de um sincronismo
         try {
-            const fulano = new User(this.nextID++, nome, email, senha, endereco, telefone, cpf);
+            const senhaCripto = await bcrypt.hash(senha, 10);            //o await vai esperar a função rodar 
+            const fulano = new User(this.nextID++, nome, email, senhaCripto, endereco, telefone, cpf);
             this.users.push(fulano);
             this.saveUsers();
             return fulano;
@@ -73,12 +75,21 @@ class userService {
             console.log("Erro ao carregar arquivo", erro)
         }
     }
-    updateUser(id){
+    
+    updateUser(id, nome, email, senha, endereco, telefone, cpf){
         try{
-        this.users = this.users.updateUser(user => user.id !== id)
-        this.saveUsers();
-        } catch{
-            console.log("Erro ao carregar arquivo", erro)
+            const user = this.users.find(user => user.id === id);
+            if(!user) return console.log("Usuário não existente/encontrado");
+            user.nome = nome;
+            user.email = email;
+            user.senhaCripto = senha;
+            user.endereco = endereco;
+            user.telefone = telefone;
+            user.cpf = cpf;
+            this.saveUsers();
+            return user;
+        }catch(erro){
+            console.log("Erro ao atualizar o usuário", erro)
         }
     }
 }

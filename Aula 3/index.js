@@ -6,13 +6,13 @@ app.use(express.json()); //habilita json no express
 
 //rota para criar usuario 
 
-app.post("/users", (req, res) => {
+app.post("/users",async (req, res) => {
     const {nome, email, senha, endereco, telefone, cpf} = req.body;
     if(!nome || !email || !senha || !endereco || !telefone || !cpf){
         return res.status(400).json({error: "Todos os campos são obrigatórios"});
     }
 
-    const user = userService.addUser(nome, email, senha, endereco, telefone, cpf);
+    const user =  await userService.addUser(nome, email, senha, endereco, telefone, cpf);
     res.status(200).json({user});
 })
 
@@ -33,15 +33,20 @@ app.delete("/users/:id", (req,res) =>{
     }
 })
 
-app.update("/users/:id", (req,res) =>{
+app.put("/users/:id", (req, res) => {
     const id = parseInt(req.params.id);
-    try{
-        const resultado = userService.updateUser(id);
+    const { nome, email, senha, endereco, telefone, cpf } = req.body;
+    try {
+        const resultado = userService.updateUser(id, nome, email, senha, endereco, telefone, cpf);
+        if (!resultado) {
+            return res.status(404).json({ error: "Usuário não encontrado" });
+        }
         res.status(200).json(resultado);
-    } catch (erro){
-        res.status(404).json({error:erro.menssage})
+    } catch (erro) {
+        console.log("Erro ao atualizar o usuário", erro);
+        res.status(500).json({ error: "Erro ao atualizar o usuário" });
     }
-}) 
+});
 
 
 const port = 3000;
