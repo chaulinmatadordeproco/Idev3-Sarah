@@ -6,30 +6,34 @@ app.use(express.json()); //habilita json no express
 
 //rota para criar usuario 
 
-app.post("/users",async (req, res) => {
-    const {nome, email, senha, endereco, telefone, cpf} = req.body;
-    if(!nome || !email || !senha || !endereco || !telefone || !cpf){
-        return res.status(400).json({error: "Todos os campos são obrigatórios"});
-    }
+app.post("/users", async (req, res) => {
+    try {
+        const { nome, email, senha, endereco, telefone, cpf } = req.body;
+        if (!nome || !email || !senha || !endereco || !telefone || !cpf) {
+            return res.status(400).json({ error: "Todos os campos são obrigatórios" });
+        }
 
-    const user =  await userService.addUser(nome, email, senha, endereco, telefone, cpf);
-    res.status(200).json({user});
+        const user = await userService.addUser(nome, email, senha, endereco, telefone, cpf);
+        res.status(200).json({ user });
+    }catch(erro){
+        res.status(401).json({error: erro.message});
+    }
 })
 
 //rota para mostrar usuario
 
-app.get("/users", (req, res) =>{
+app.get("/users", (req, res) => {
     res.json(userService.getUser())
 })
 
 //rota para excluir id
-app.delete("/users/:id", (req,res) =>{
+app.delete("/users/:id", (req, res) => {
     const id = parseInt(req.params.id); //converte o id para número 
-    try{
+    try {
         const resultado = userService.deleteUser(id); //tenta excluir o usuário
         res.status(200).json(resultado); //retorna a mensagem de sucesso 
-    } catch (erro){
-        res.status(404).json({error:erro.menssage}) //retorna a mensagem de erro
+    } catch (erro) {
+        res.status(404).json({ error: erro.message }) //retorna a mensagem de erro
     }
 })
 
@@ -44,12 +48,12 @@ app.put("/users/:id", (req, res) => {
         res.status(200).json(resultado);
     } catch (erro) {
         console.log("Erro ao atualizar o usuário", erro);
-        res.status(500).json({ error: "Erro ao atualizar o usuário" });
+        res.status(500).json({ error: erro.message });
     }
 });
 
 
 const port = 3000;
-app.listen(port,() =>{
-    console.log("Servidor rodando na porta",port)
+app.listen(port, () => {
+    console.log("Servidor rodando na porta", port)
 })

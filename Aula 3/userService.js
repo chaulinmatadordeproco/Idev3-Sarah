@@ -38,26 +38,33 @@ class userService {
 
     }
 
-    saveUsers(){ //função para salvar os usuários 
-        try{
-        fs.writeFileSync(this.filePath, JSON.stringify(this.users)) 
-    }catch(erro){
-        console.log("Erro ao carregar arquivo", erro)
-    }
+    saveUsers() { //função para salvar os usuários 
+        try {
+            fs.writeFileSync(this.filePath, JSON.stringify(this.users))
+        } catch (erro) {
+            console.log("Erro ao carregar arquivo", erro)
+        }
     }
 
     async addUser(nome, email, senha, endereco, telefone, cpf) { // função assincrona ela espera algo acontecer dentro para funcionar. Precisa de um sincronismo
         try {
+            const cpfexiste = this.users.some(user => user.cpf = cpf)
+            if (cpfexiste) {
+                throw new Error("CPF já cadastrado");
+            }
+
             const senhaCripto = await bcrypt.hash(senha, 10);            //o await vai esperar a função rodar 
             const fulano = new User(this.nextID++, nome, email, senhaCripto, endereco, telefone, cpf);
             this.users.push(fulano);
             this.saveUsers();
             return fulano;
+
         } catch (erro) {
-            console.log("Erro ao carregar arquivo", erro)
+            
+            throw erro;
         }
     }
-    
+
     getUser() {
         try {
             return this.users
@@ -65,21 +72,25 @@ class userService {
             console.log("Erro ao carregar arquivo", erro)
         }
     }
-    
-    deleteUser(id){
-        try{
+
+    deleteUser(id) {
+        try {
             this.users = this.users.filter(user => user.id !== id); //cria um novo aray, não colocando o id selecionado 
             this.saveUsers();
         }
-        catch{
+        catch {
             console.log("Erro ao carregar arquivo", erro)
         }
     }
-    
-    updateUser(id, nome, email, senha, endereco, telefone, cpf){
-        try{
-            const user = this.users.find(user => user.id === id);
-            if(!user) return console.log("Usuário não existente/encontrado");
+
+    updateUser(id, nome, email, senha, endereco, telefone, cpf) {
+        try {
+            const cpfexiste = this.users.some(user => user.cpf = cpf)
+            if (cpfexiste) {
+                throw new Error("CPF já cadastrado");
+            }
+            const user = this.users.find(user => user.id == id);
+            if (!user) return console.log("Usuário não existente/encontrado");
             user.nome = nome;
             user.email = email;
             user.senhaCripto = senha;
@@ -88,8 +99,9 @@ class userService {
             user.cpf = cpf;
             this.saveUsers();
             return user;
-        }catch(erro){
+        } catch (erro) {
             console.log("Erro ao atualizar o usuário", erro)
+            throw erro;
         }
     }
 }

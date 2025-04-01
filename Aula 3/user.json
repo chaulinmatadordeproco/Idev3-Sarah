@@ -30,5 +30,23 @@
         "endereco": "rua dos jamals",
         "telefone": "1324567598-5569",
         "cpf": "166-252-138-09"
+    },
+    {
+        "id": 6,
+        "nome": "Jamal Bolites",
+        "email": "JamalBetss@gmail.com",
+        "senha": "$2b$10$sc70Ygza5gyGM0Lk/m4KOOXQDe67p6U0VUbfvxXdp7/GJ9bHPnu5u",
+        "endereco": "rua dos jamalsinhos",
+        "telefone": "1324567598-6569",
+        "cpf": "166-252-138-09"
+    },
+    {
+        "id": 7,
+        "nome": "Jamal Bolites",
+        "email": "JamalBetss@gmail.com",
+        "senha": "$2b$10$BJ.qj993szQxeQaYHYv5luGmVb3gSsb99ZKU9vxaWOM9WWw92Mi7.",
+        "endereco": "rua dos jamalsinhos",
+        "telefone": "1324567598-6569",
+        "cpf": "166-252-138-09"
     }
 ]
