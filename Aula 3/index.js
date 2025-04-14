@@ -14,7 +14,7 @@ app.post("/users", async (req, res) => {
         }
 
         const user = await userService.addUser(nome, email, senha, endereco, telefone, cpf);
-        res.status(200).json({ user });
+        res.status(200).json({ mensagem: "Usuario Cadastrado com Sucesso!" });
     }catch(erro){
         res.status(401).json({error: erro.message});
     }

@@ -33,3 +33,22 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+`nome`, `email`, `senha`, `endereco`, `telefone`, `cpf` 
+
+insert into usuarios(`nome`, `email`, `senha`, `endereco`, `telefone`, `cpf`) values
+("Pardal Carequinha","Pardalzin.trambaiolli@gmail.com","Carequinhalisinha321","Rua dos baitolas","1234567891","16625213809");
+
+delete from usuarios
+where id = 1
+
+	INSERT INTO usuarios (nome, email, senha, endereco, telefone, telefone, cpf)
+		VALUES ("Jamal", "jamalballs@gmail.com", "1234", "Rua dos jamals", "123", "12345678910")
+
+    	INSERT INTO usuarios (nome, email, senha, endereco, telefone, cpf)
+		VALUES ("Jamal", "jamalballs@gmail.com", "1234", "Rua dos jamals", "12323456", "12345678910");
+
+    UPDATE usuarios
+	   SET nome = "Léo"
+	 WHERE idUsuário = 1

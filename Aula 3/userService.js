@@ -1,8 +1,9 @@
 const User = require("./user");
 const path = require('path'); //modulo para maniplular caminhos
 const fs = require('fs'); //módulo para manipular arquivos fille sytem ,
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
 const { get } = require("http");
+const mysql = require('./mysql'); //importando funções de conexão com o MySQL
 
 
 // toda vez que a lista começar com o valor fixo, não precisa colocar aqui
@@ -52,12 +53,15 @@ class userService {
             if (cpfexiste) {
                 throw new Error("CPF já cadastrado");
             }
-
             const senhaCripto = await bcrypt.hash(senha, 10);            //o await vai esperar a função rodar 
-            const fulano = new User(this.nextID++, nome, email, senhaCripto, endereco, telefone, cpf);
-            this.users.push(fulano);
-            this.saveUsers();
-            return fulano;
+            
+            const resultados = await mysql.execute(
+                `INSERT INTO usuarios (nome, email, senha, endereco, telefone, cpf)
+		            VALUES ( ?, ?, ?, ?, ?, ?);`
+                    [nome, email, senhaCripto, endereco, telefone, cpf]
+            );
+            return resultados;
+
 
         } catch (erro) {
             
