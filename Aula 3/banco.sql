@@ -43,7 +43,7 @@ insert into usuarios(`nome`, `email`, `senha`, `endereco`, `telefone`, `cpf`) va
 delete from usuarios
 where id = 1
 
-	INSERT INTO usuarios (nome, email, senha, endereco, telefone, telefone, cpf)
+	INSERT INTO usuarios (nome, email, senha, endereco,telefone, cpf)
 		VALUES ("Jamal", "jamalballs@gmail.com", "1234", "Rua dos jamals", "123", "12345678910")
 
     	INSERT INTO usuarios (nome, email, senha, endereco, telefone, cpf)

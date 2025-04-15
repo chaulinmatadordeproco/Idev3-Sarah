@@ -49,22 +49,19 @@ class userService {
 
     async addUser(nome, email, senha, endereco, telefone, cpf) { // função assincrona ela espera algo acontecer dentro para funcionar. Precisa de um sincronismo
         try {
-            const cpfexiste = this.users.some(user => user.cpf = cpf)
-            if (cpfexiste) {
-                throw new Error("CPF já cadastrado");
-            }
+
             const senhaCripto = await bcrypt.hash(senha, 10);            //o await vai esperar a função rodar 
-            
+
             const resultados = await mysql.execute(
                 `INSERT INTO usuarios (nome, email, senha, endereco, telefone, cpf)
-		            VALUES ( ?, ?, ?, ?, ?, ?);`
-                    [nome, email, senhaCripto, endereco, telefone, cpf]
+		            VALUES ( ?, ?, ?, ?, ?, ?);`,
+                [nome, email, senhaCripto, endereco, telefone, cpf]
             );
             return resultados;
 
 
         } catch (erro) {
-            
+
             throw erro;
         }
     }
@@ -87,22 +84,17 @@ class userService {
         }
     }
 
-    updateUser(id, nome, email, senha, endereco, telefone, cpf) {
+    async updateUser(id, nome, email, senha, endereco, telefone, cpf) {
         try {
-            const cpfexiste = this.users.some(user => user.cpf = cpf)
-            if (cpfexiste) {
-                throw new Error("CPF já cadastrado");
-            }
-            const user = this.users.find(user => user.id == id);
-            if (!user) return console.log("Usuário não existente/encontrado");
-            user.nome = nome;
-            user.email = email;
-            user.senhaCripto = senha;
-            user.endereco = endereco;
-            user.telefone = telefone;
-            user.cpf = cpf;
-            this.saveUsers();
-            return user;
+            const senhaCripto = await bcrypt.hash(senha, 10); //criptografa a senha
+            // this.saveUsers();]
+            const resultados = await mysql.execute(
+                `UPDATE usuarios
+                SET nome = ?, email = ?, senha = ?, endereco = ?, telefone = ?, cpf = ?
+              WHERE idUsuario = ?`,
+                [nome, email, senhaCripto, endereco, telefone, cpf, id]
+            );
+            return resultados;
         } catch (erro) {
             console.log("Erro ao atualizar o usuário", erro)
             throw erro;
