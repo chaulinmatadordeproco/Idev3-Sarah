@@ -29,20 +29,33 @@ class userService {
         }
     }
 
-    getUser() {
+    async getUser(id) {
         try {
-            return this.users
+            const resultado = await mysql.execute(
+                `SELECT idUsuario FROM usuarios WHERE idUsuario = ?`,
+                [id]
+            );
+            console.log("resultado;", resultado);
+            return resultado;
         } catch (erro) {
-            console.log("Erro ao carregar arquivo", erro)
+            console.log("Erro ao deletar arquivo", erro)
         }
     }
 
-    deleteUser(id) {
+    async deleteUser(id) {
         try {
-            this.users = this.users.filter(user => user.id !== id); //cria um novo aray, não colocando o id selecionado 
-            this.saveUsers();
+            const user = await this.getUser(id);
+            if (user.length == 0) {
+                console.log("Usuário não existe");
+                return;
+            }
+            const resultado = await mysql.execute(
+                `DELETE FROM usuarios WHERE idUsuario = ?`,
+                [id]
+            );
+            return resultado;
         }
-        catch {
+        catch (erro){
             console.log("Erro ao carregar arquivo", erro)
         }
     }

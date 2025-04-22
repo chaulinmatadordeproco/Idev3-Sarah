@@ -27,13 +27,17 @@ app.get("/users", (req, res) => {
 })
 
 //rota para excluir id
-app.delete("/users/:id", (req, res) => {
+app.delete("/users/:id", async(req, res) => {
     const id = parseInt(req.params.id); //converte o id para número 
     try {
-        const resultado = userService.deleteUser(id); //tenta excluir o usuário
-        res.status(200).json(resultado); //retorna a mensagem de sucesso 
+        const resultado = await  userService.deleteUser(id); //tenta excluir o usuário
+
+        if (!resultado) {
+            return res.status(406).json({ "Mensagem": "Usuário não existe" }); //se não encontrar o id retorna erro
+        }
+        return res.status(200).json(resultado); //retorna a mensagem de sucesso 
     } catch (erro) {
-        res.status(404).json({ error: erro.message }) //retorna a mensagem de erro
+        return res.status(404).json({ error: erro.message }) //retorna a mensagem de erro
     }
 })
 
